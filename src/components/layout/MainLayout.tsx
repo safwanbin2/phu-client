@@ -28,6 +28,8 @@ const items: MenuProps["items"] = [
   },
 ];
 
+// Bringing programmitcal way
+
 const MainLayout = () => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
