@@ -8,11 +8,11 @@ const Login = () => {
   });
   const [login, { data, error }] = useLoginMutation();
 
-  const handleLogin = async (data) => {
+  const handleLogin = async (data: { id: string; password: string }) => {
     await login(data);
   };
 
-  console.log(data);
+  console.log({ data, error });
 
   return (
     <div
