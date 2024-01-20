@@ -5,32 +5,35 @@ import {
   studentSidebarItems,
 } from "./SidebarItems";
 import { USER_ROLES } from "./constants";
+import { useAppSelector } from "../../redux/hooks";
 
 const { Sider } = Layout;
 
-const userRole = USER_ROLES.ADMIN;
-let sidebarItems;
-
-switch (userRole) {
-  case USER_ROLES.ADMIN:
-    sidebarItems = adminSidebarItems;
-    break;
-
-  case USER_ROLES.FACULTY:
-    sidebarItems = facultySidebarItems;
-    break;
-
-  case USER_ROLES.STUDENT:
-    sidebarItems = studentSidebarItems;
-    break;
-
-  default:
-    break;
-}
-
-const items: MenuProps["items"] = sidebarItems;
-
 const Sidebar = () => {
+  // const userRole = USER_ROLES.FACULTY;
+  const { role: userRole } = useAppSelector((state) => state.auth.user);
+
+  let sidebarItems;
+
+  switch (userRole) {
+    case USER_ROLES.ADMIN:
+      sidebarItems = adminSidebarItems;
+      break;
+
+    case USER_ROLES.FACULTY:
+      sidebarItems = facultySidebarItems;
+      break;
+
+    case USER_ROLES.STUDENT:
+      sidebarItems = studentSidebarItems;
+      break;
+
+    default:
+      break;
+  }
+
+  const items: MenuProps["items"] = sidebarItems;
+
   return (
     <Sider breakpoint="lg" collapsedWidth="0">
       <div style={{ color: "white" }}>
