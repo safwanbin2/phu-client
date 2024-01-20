@@ -12,7 +12,7 @@ const { Sider } = Layout;
 const Sidebar = () => {
   // const userRole = USER_ROLES.FACULTY;
   const { role: userRole } = useAppSelector((state) => state.auth.user);
-
+  console.log(userRole);
   let sidebarItems;
 
   switch (userRole) {

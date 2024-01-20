@@ -1,7 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+type TTokenUser = {
+  id: string;
+  role: string;
+};
+
 type TInitialState = {
-  user: null | object;
+  user: null | TTokenUser;
   token: null | string;
 };
 
