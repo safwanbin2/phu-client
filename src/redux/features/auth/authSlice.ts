@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type TAuthUser = {
+type TInitialState = {
   user: null | object;
   token: null | string;
 };
 
-const initialState: TAuthUser = {
+const initialState: TInitialState = {
   user: null,
   token: null,
 };
@@ -14,17 +14,13 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    saveUser: (state, action: PayloadAction<TAuthUser>) => {
-      const { user, token } = action.payload;
+    saveUser: (state, action: PayloadAction<TInitialState>) => {
+      const { token, user } = action.payload;
       state.user = user;
       state.token = token;
-    },
-    logout: (state) => {
-      state.user = null;
-      state.token = null;
     },
   },
 });
 
-export const { saveUser, logout } = authSlice.actions;
+export const { saveUser } = authSlice.actions;
 export default authSlice.reducer;

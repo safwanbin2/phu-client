@@ -11,16 +11,20 @@ const Login = () => {
   });
   const [login, { error }] = useLoginMutation();
   const dispatch = useAppDispatch();
-  const { token, user } = useAppSelector((state) => state.auth);
+  const { user, token } = useAppSelector((state) => state.auth);
 
   const handleLogin = async (data: { id: string; password: string }) => {
     const userData = await login(data).unwrap();
-
-    const user = verifyToken(userData.data.accessToken);
-
-    dispatch(saveUser({ user, token: userData.data.accessToken }));
+    dispatch(
+      saveUser({
+        user: verifyToken(userData.data.accessToken),
+        token: userData.data.accessToken,
+      })
+    );
   };
-  console.log({ token, user, error });
+
+  console.log({ user, token, error });
+
   return (
     <div
       style={{
