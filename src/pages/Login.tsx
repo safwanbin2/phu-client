@@ -20,7 +20,7 @@ const Login = () => {
 
     dispatch(saveUser({ user, token: userData.data.accessToken }));
   };
-  console.log({ token, user });
+  console.log({ token, user, error });
   return (
     <div
       style={{
