@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./features/auth/authSlice";
 import { baseApi } from "./api/baseApi";
+import authReducer from "./features/auth/authSlice";
 import {
   persistStore,
   persistReducer,
@@ -22,8 +22,8 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    auth: persistedReducer,
     [baseApi.reducerPath]: baseApi.reducer,
+    auth: persistedReducer,
   },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({
@@ -37,4 +37,5 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
+
 export const persistor = persistStore(store);

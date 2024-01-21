@@ -5,14 +5,12 @@ import {
   studentSidebarItems,
 } from "./SidebarItems";
 import { USER_ROLES } from "./constants";
-import { useAppSelector } from "../../redux/hooks";
 
 const { Sider } = Layout;
 
 const Sidebar = () => {
-  // const userRole = USER_ROLES.FACULTY;
-  const { role: userRole } = useAppSelector((state) => state.auth.user);
-  console.log(userRole);
+  const userRole = USER_ROLES.ADMIN;
+
   let sidebarItems;
 
   switch (userRole) {

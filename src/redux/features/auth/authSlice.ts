@@ -1,12 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type TTokenUser = {
-  id: string;
-  role: string;
-};
-
 type TInitialState = {
-  user: null | TTokenUser;
+  user: null | object;
   token: null | string;
 };
 
@@ -24,8 +19,12 @@ const authSlice = createSlice({
       state.user = user;
       state.token = token;
     },
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+    },
   },
 });
 
-export const { saveUser } = authSlice.actions;
+export const { saveUser, logout } = authSlice.actions;
 export default authSlice.reducer;

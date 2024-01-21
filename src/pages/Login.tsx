@@ -6,24 +6,20 @@ import { saveUser } from "../redux/features/auth/authSlice";
 import { verifyToken } from "../utils/verifyToken";
 
 const Login = () => {
+  const [login] = useLoginMutation();
+  const dispatch = useAppDispatch();
+  const { user, token } = useAppSelector((state) => state.auth);
   const { register, handleSubmit } = useForm({
     defaultValues: { id: "2024010014", password: "safwan" },
   });
-  const [login, { error }] = useLoginMutation();
-  const dispatch = useAppDispatch();
-  const { user, token } = useAppSelector((state) => state.auth);
 
   const handleLogin = async (data: { id: string; password: string }) => {
-    const userData = await login(data).unwrap();
-    dispatch(
-      saveUser({
-        user: verifyToken(userData.data.accessToken),
-        token: userData.data.accessToken,
-      })
-    );
+    const user = await login(data).unwrap();
+    const userInfo = await verifyToken(user.data.accessToken);
+    dispatch(saveUser({ user: userInfo, token: user.data.accessToken }));
   };
 
-  console.log({ user, token, error });
+  console.log({ user, token });
 
   return (
     <div
