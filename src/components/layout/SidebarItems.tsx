@@ -27,6 +27,18 @@ export const adminSidebarItems = [
       },
     ],
   },
+  {
+    key: "Academic Management",
+    label: "Academic Management",
+    children: [
+      {
+        key: "Academic Semesters",
+        label: (
+          <NavLink to="/admin/academic-semesters">Academic Semesters</NavLink>
+        ),
+      },
+    ],
+  },
 ];
 
 export const facultySidebarItems = [

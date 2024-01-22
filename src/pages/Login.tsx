@@ -12,7 +12,7 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const { user, token } = useAppSelector((state) => state.auth);
   const { register, handleSubmit } = useForm({
-    defaultValues: { id: "2024010014", password: "safwan" },
+    defaultValues: { id: "A-1", password: "admin123" },
   });
   const navigate = useNavigate();
 
