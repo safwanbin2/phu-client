@@ -1,4 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  BaseQueryApi,
+  BaseQueryFn,
+  DefinitionType,
+  FetchArgs,
+  createApi,
+  fetchBaseQuery,
+} from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 import { logout, saveUser } from "../features/auth/authSlice";
 
@@ -14,12 +22,12 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-const baseQueryWithRefreshToken = async (
-  args,
-  { dispatch, getState },
-  extraOptions
-) => {
-  let result = await baseQuery(args, { dispatch, getState }, extraOptions);
+const baseQueryWithRefreshToken: BaseQueryFn<
+  FetchArgs,
+  BaseQueryApi,
+  DefinitionType
+> = async (args, api, extraOptions): Promise<any> => {
+  let result = await baseQuery(args, api, extraOptions);
   if (result?.error?.status === 401) {
     const res = await fetch(`http://localhost:5000/api/v1/auth/refresh-token`, {
       method: "POST",
@@ -28,12 +36,14 @@ const baseQueryWithRefreshToken = async (
     const data = await res.json();
     console.log(data);
     if (data?.data?.accessToken) {
-      const currentUser = (getState() as RootState).auth.user;
-      dispatch(saveUser({ user: currentUser, token: data.data.accessToken }));
+      const currentUser = (api.getState() as RootState).auth.user;
+      api.dispatch(
+        saveUser({ user: currentUser, token: data.data.accessToken })
+      );
 
-      result = await baseQuery(args, { dispatch, getState }, extraOptions);
+      result = await baseQuery(args, api, extraOptions);
     } else {
-      dispatch(logout());
+      api.dispatch(logout());
     }
   }
   return result;
