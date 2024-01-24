@@ -4,6 +4,7 @@ const About = () => {
       <h2>about</h2>
     </div>
   );
+  // comment
 };
 
 export default About;
