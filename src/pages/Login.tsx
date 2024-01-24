@@ -1,5 +1,4 @@
 import { Button } from "antd";
-import { FormProvider, useForm } from "react-hook-form";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { TUser, saveUser } from "../redux/features/auth/authSlice";
@@ -13,24 +12,21 @@ const Login = () => {
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
   const { user, token } = useAppSelector((state) => state.auth);
-  const { register, handleSubmit } = useForm({
-    defaultValues: { id: "A-1", password: "admin123" },
-  });
   const navigate = useNavigate();
 
   const handleLogin = async (data: { id: string; password: string }) => {
     console.log(data);
-    // toast.loading("Logging in", { id: "authLoading", duration: 2000 });
-    // const user = await login(data).unwrap();
-    // const userInfo = (await verifyToken(user.data.accessToken)) as TUser;
-    // dispatch(saveUser({ user: userInfo, token: user.data.accessToken }));
-    // toast.success("Logged in successfully", {
-    //   id: "authLoading",
-    //   duration: 2000,
-    // });
-    // navigate(`/${userInfo.role}/dashboard`);
+    toast.loading("Logging in", { id: "authLoading", duration: 2000 });
+    const user = await login(data).unwrap();
+    const userInfo = (await verifyToken(user.data.accessToken)) as TUser;
+    dispatch(saveUser({ user: userInfo, token: user.data.accessToken }));
+    toast.success("Logged in successfully", {
+      id: "authLoading",
+      duration: 2000,
+    });
+    navigate(`/${userInfo.role}/dashboard`);
   };
-
+  console.log({ token, user });
   return (
     <PHform onSubmit={handleLogin}>
       <div
@@ -43,15 +39,12 @@ const Login = () => {
         }}
       >
         <h2>Login</h2>
-
         <div>
           <label htmlFor="id">ID: </label>
-          {/* <input {...register("id")} type="text" id="id" /> */}
           <PHinput name="id" type="text" key="id" />
         </div>
         <div>
           <label htmlFor="password">Password: </label>
-          {/* <input {...register("password")} type="text" id="password" /> */}
           <PHinput name="password" type="text" key="password" />
         </div>
         <div>

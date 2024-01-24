@@ -8,7 +8,6 @@ const PHinput = ({ type, name }: Record<string, string>) => {
       render={({ field }) => <Input type={type} id={name} {...field} />}
     />
   );
-  // return <input type={type} id="name" {...register(name)} />;
 };
 
 export default PHinput;
